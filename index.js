@@ -5,9 +5,9 @@
  
  servidor.get("/", (solicitud , respuesta)=>{
   respuesta.json({
-  saludo: "Hola Albeiro"
+  saludo: "Hola Albeiro con nodemon"
   })
  });
   
  servidor.listen(3000);
- console.log("corriendo servidor");
+ console.log("corriendo servidor con nodemon");

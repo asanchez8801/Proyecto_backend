@@ -3,6 +3,7 @@ import enrutadorUsuarios from "./src/rutas/rutaUsuarios.js";
 
  const servidor = express();
  
+ servidor.use(express.json());
  servidor.use("/usuarios", enrutadorUsuarios);
  
  //ruta raiz 

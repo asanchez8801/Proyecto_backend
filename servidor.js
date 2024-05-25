@@ -1,5 +1,5 @@
 import express from "express";
-import enrutadorUsuarios from "./rutas/rutaUsuarios.js";
+import enrutadorUsuarios from "./src/rutas/rutaUsuarios.js";
 
  const servidor = express();
  

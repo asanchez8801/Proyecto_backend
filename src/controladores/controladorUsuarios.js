@@ -17,7 +17,7 @@ const ControladorUsuarios = {
     
     console.log("solicitud: ", solicitud.body);
     
-    if (solicitud.body.nombre === "") throw new Error("Faltan el campo Nombres")
+    /* if (solicitud.body.nombre === "") throw new Error("Faltan el campo Nombres")
     if (solicitud.body.apellidos === "") throw new Error("Faltan el campo Apellidos")
     if (solicitud.correo === "") throw new Error("Faltan el campo Correo")
     if (solicitud.body.contrasena === "") throw new Error("Faltan el campo Contraseña")
@@ -33,7 +33,7 @@ const ControladorUsuarios = {
     if (solicitud.body.pais === "") throw new Error("Faltan el campo País")
     if (solicitud.body.ciudad === "") throw new Error("Faltan el campo Ciudad")
     if (solicitud.body.nivEscolar === "") throw new Error("Faltan el campo Nivel Escolar")
-    if (solicitud.body.profesion === "") throw new Error("Faltan el campo Profesión")
+    if (solicitud.body.profesion === "") throw new Error("Faltan el campo Profesión") */
                                                                        
     } catch (error) {
         respuesta.json({

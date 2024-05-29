@@ -1,8 +1,10 @@
 import express from "express";
 import enrutadorUsuarios from "./src/rutas/rutaUsuarios.js";
+import morgan from "morgan";
 
  const servidor = express();
  
+ servidor.use(morgan("dev"));
  servidor.use(express.json());
  servidor.use("/usuarios", enrutadorUsuarios);
  

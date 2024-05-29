@@ -1,7 +1,20 @@
+import ModeloUsuario from "../modelos/modeloUsuario.js"
+
 const ControladorUsuarios = {
 
     crearUsuario: async (solicitud , respuesta)=>{
     try {
+     const nuevoUsuario = new ModeloUsuario(solicitud.body);
+     const usuarioCreado = await nuevoUsuario.save();
+     
+    if(usuarioCreado.id){
+    respuesta.json({
+    resultado: "bien",
+    mensaje: "usuario creado satisfactoriamente",
+    id: usuarioCreado._id
+    });
+    }
+    
     console.log("solicitud: ", solicitud.body);
     
     if (solicitud.body.nombre === "") throw new Error("Faltan el campo Nombres")
@@ -21,31 +34,52 @@ const ControladorUsuarios = {
     if (solicitud.body.ciudad === "") throw new Error("Faltan el campo Ciudad")
     if (solicitud.body.nivEscolar === "") throw new Error("Faltan el campo Nivel Escolar")
     if (solicitud.body.profesion === "") throw new Error("Faltan el campo Profesión")
-                                                                     
-    respuesta.json({mensaje: "Crear Usuario Works!"})   
+                                                                       
     } catch (error) {
-        respuesta.json({error: true, mensaje: "Ocurrió un error al crear usuario"})
-        console.log(error);
-    }},
+        respuesta.json({
+            resultado: "mal",
+            mensaje: "error al crear el usuario",
+            datos: error  
+    });
+    }
+},
     
     /* ----------------------------------------------------- */ 
        leerUsuario: async (solicitud , respuesta)=>{
        try {
-        console.log(solicitud.params.id)
-        respuesta.json({mensaje: "leer Usuario Works!"})
+        const usuarioEncontrado = await ModeloUsuario.findById(solicitud.params.id)
+        if (usuarioEncontrado._id){
+        respuesta.json({
+        resultado: "bien",
+        mensaje: "usuario leído",
+        datos: usuarioEncontrado
+        });
+        }
        } catch (error) {
-        respuesta.json({error: true, mensaje: "Ocurrió un error al leer usuario"})
-        console.log(error);
+        respuesta.json({
+            resultado: "Mal",
+            mensaje: "ocurrio un error al leer el usuario",
+            datos: error
+            });
        }
        },
        
     /* ----------------------------------------------------- */ 
        leerUsuarios: async (solicitud , respuesta)=>{
        try {
-        respuesta.json({mensaje: "Leer todos los Usuarios Works!"})
+        const todosLosUsuarios = await ModeloUsuario.find();
+            respuesta.json({
+            resultado: "bien",
+            mensaje: "usuarios leídos",
+            datos: todosLosUsuarios
+            });
+            
        } catch (error) {
-        respuesta.json({error: true, mensaje: "Ocurrió un error al leer todos los usuarios"})
-        console.log(error);
+        respuesta.json({
+            resultado: "Mal",
+            mensaje: "ocurrio un error al leer todos los usuario",
+            datos: error
+            });
        }
        },
     /* ----------------------------------------------------- */    
@@ -62,35 +96,24 @@ const ControladorUsuarios = {
        },
     /* ----------------------------------------------------- */    
        eliminarUsuario: async (solicitud , respuesta)=>{
-         try {
-        console.log(solicitud.params.id)
-        respuesta.json({mensaje: "Eliminar Usuario Works!"})
-       } catch (error) {
-        respuesta.json({error: true, mensaje: "Ocurrió un error al eliminar el usuario"})
-        console.log(error);
-       }
-       },
+        try {
+            const usuarioEliminado = await ModeloUsuario.findByIdAndDelete(solicitud.params.id)
+            if (usuarioEliminado._id){
+            respuesta.json({
+            resultado: "bien",
+            mensaje: "usuario Eliminado",
+            datos: null
+            });
+            }
+           } catch (error) {
+            respuesta.json({
+                resultado: "Mal",
+                mensaje: "ocurrio un error al eliminar el usuario",
+                datos: error
+                });
+           }
+           },
 }
 
 export default ControladorUsuarios;
 
-/* const usuario={
-    nombres: "Albeiro",
-    apellidos: "Sánchez",
-    correo: "jasanchez8801@gmail.com",
-    contrasena: "12345",
-    confirmarContrasena: "12345",
-    edad: "36",
-    telefono: "3003150482",
-    nomContactoEmergencia: "Carolina Amarillo",
-    numContactoEmergencia:"3118992100",
-    parentezcoContacto: "esposa",
-    direccion: "tv 49 # 59c-73",
-    fechaNacimiento: "28-01-1988",
-    genero: "Masculino",
-    pais: "Colombia",
-    ciudad: "Bogotá",
-    nivEscolar: "Profesional Universitario",
-    profesion: "Ingeniero Sistemas"
-}
- */

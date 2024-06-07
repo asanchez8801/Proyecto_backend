@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import ModeloUsuario from "../modelos/modeloUsuario.js"
 
 const ControladorUsuarios = {
